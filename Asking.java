@@ -18,7 +18,7 @@ public class Asking {
         Scanner scanner = new Scanner(System.in);
         double shoe = scanner.nextDouble();
      
-             boolean statement;
+             //boolean statement;
 
               // if (shoe >= 6) {
             //statement = true;
@@ -32,6 +32,7 @@ public class Asking {
                }else {
                    System.out.println("You are young shame");
                }
+        scanner.close();
 
         // Find a way to get the information from the dialog box
         // get it a boolean true/false value(Important)
