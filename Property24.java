@@ -8,13 +8,16 @@ public class Property24 {
     public static void main(String[] args) {
         // TODO code application logic here
 
-        String names = JOptionPane.showInputDialog("Please type in your name and surname(separate by a space)");
+        String fname,Lname;
+        fname = JOptionPane.showInputDialog("Enter your first name>>");
+        Lname= JOptionPane.showInputDialog("Enter your last name>>");
         ArrayList<Double> income_tax = new ArrayList<Double>();
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println(names + " please type in your Gross Monthly income(before deductions) and estimated mothly tax deduction. Press ENTER after each value entered.");
+        System.out.println(fname +" "+Lname+ ", please type in your Gross Monthly income (before deductions):");
         double income = scanner.nextDouble();
         income_tax.add(income);
+        System.out.println("Then type in your estimated monthly tax deduction:");
         double tax_deduction = scanner.nextDouble();
         income_tax.add(tax_deduction);
 
