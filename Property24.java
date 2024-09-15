@@ -1,7 +1,5 @@
-import javax.swing.*;
-//I purposely imported everything from both the java.util and javax.swing because i didnt want to have forgotten or mispelled something
-// import java.util.Scanner;
 import java.util.*;
+import javax.swing.*;
  // @author Cee_J
 public class Property24 {
 
@@ -28,14 +26,18 @@ public class Property24 {
         double tax_deduction = scanner.nextDouble();
         income_tax.add(tax_deduction);
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        
-        
-
-        
-
+        //SHowing your tax percentage
+        System.out.println(tax(income,tax_deduction));
 
 
     }
+     public static String tax(double income, double deduction) {
+        if (income > deduction) {
+            double t_perccent = (deduction/income)*100;
+            return "Your tax percentage is " + t_perccent;
+        } else {
+            return  "Your Estimated monthly tax deducted is bigger than your income";
+        }
+     }
     
 }
