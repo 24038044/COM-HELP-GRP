@@ -77,7 +77,12 @@ public class Property24 {
             double[] expenditurelist = {Expenditure.get(0),Expenditure.get(1),Expenditure.get(2),Expenditure.get(3),Expenditure.get(4)};
             estimated_remains  = income - (income-tax_deduction) - total_expense;  
         JOptionPane.showMessageDialog(null,"With tax deducted and total expenses paid for, your estimated account stands at R" + estimated_remains);
-
+        
+        
+        /*After i called housingOptions to the main method
+        @Apex*/ 
+        
+        HousingOptions();
 
     }
     ///This is the fomrlae to get the tax percentage deducted from income
@@ -89,5 +94,53 @@ public class Property24 {
             return  "There has been an error, your Estimated monthly tax deducted is bigger than your income";
         }
      }
-    
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     //part(1)>>2,3,4
+     //@ author TheApex
+     public static void HousingOptions() {
+        Scanner scanner = new Scanner(System.in);
+       
+        //step 2 where the user will be able to select between renting and buying a property
+        /*Used Confirm dialog to be able to have a yes or no option
+         * Started with renting choice
+         */
+
+        int rentChoice = JOptionPane.showConfirmDialog(null, "Do you want to rent an apartment?", "Please choose between yes and no", JOptionPane.YES_NO_OPTION);
+         /*used a if statement that if it true that the user the GUI selected no 
+         then the user must be asked if since he/she chose no want to buy a propery*/
+         if (rentChoice == JOptionPane.NO_OPTION) {
+            int buyPropertyChoice = JOptionPane.showConfirmDialog(null, "Do you want to buy property?", "Please choose between yes and no", JOptionPane.YES_NO_OPTION);
+              /* therefore since we have buyproperty in a if (conditon) we can have another if inside the first if because
+               * we want to use int buyproperychoice 
+              */
+            if (buyPropertyChoice == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(null, "You do not have a place to stay.");
+            } else {
+                /*if the user chose yes for the second (if)vto buy property then fill in the details */
+
+                System.out.println("You have chosen to buy property");
+
+                System.out.println("Enter the Purchase price of the property >>");
+                double price_property = scanner.nextDouble();
+
+                System.out.println("Enter Total deposit >>");
+                double Total_deposit = scanner.nextDouble();
+
+                System.out.println("Enter Interest rate (percentage) >>");
+                double Interest = scanner.nextDouble();
+
+
+                System.out.println("Enter Number of months to repay (between 240 and 360) >>");
+                double Months = scanner.nextDouble();
+            }
+        } else {
+            //for the firts (if) if the user had selected yes .
+               System.out.println("You have chosen to rent an apartment.");
+
+               System.out.println("Enter the monthly rental amount");
+               double rent_amount = scanner.nextDouble();
+        }scanner.close();
+    }
 }
+    
