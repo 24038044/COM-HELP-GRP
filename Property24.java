@@ -106,6 +106,7 @@ public class Property24 {
          * Started with renting choice
          */
 
+       double price_property, Total_deposit, Interest, Months;
         int rentChoice = JOptionPane.showConfirmDialog(null, "Do you want to rent an apartment?", "Please choose between yes and no", JOptionPane.YES_NO_OPTION);
          /*used a if statement that if it true that the user the GUI selected no 
          then the user must be asked if since he/she chose no want to buy a propery*/
@@ -122,17 +123,28 @@ public class Property24 {
                 System.out.println("You have chosen to buy property");
 
                 System.out.println("Enter the Purchase price of the property >>");
-                double price_property = scanner.nextDouble();
+                 price_property = scanner.nextDouble();
 
                 System.out.println("Enter Total deposit >>");
-                double Total_deposit = scanner.nextDouble();
+                 Total_deposit = scanner.nextDouble();
 
                 System.out.println("Enter Interest rate (percentage) >>");
-                double Interest = scanner.nextDouble();
+                 Interest = scanner.nextDouble();
 
 
                 System.out.println("Enter Number of months to repay (between 240 and 360) >>");
-                double Months = scanner.nextDouble();
+                 Months = scanner.nextDouble();
+
+               ///Loan amount calculations
+                double LoanAmount = price_property - Total_deposit;
+             // convert yearly interest rate to monthly interest rate
+              double monthlyIR = (Interest /Months /100); //Consider the user to enter decimals
+
+                //call the Amortization method
+                 displayAmortizationTable(price_property, monthlyIR, Months);
+               
+
+               
             }
         } else {
             //for the firts (if) if the user had selected yes .
@@ -142,5 +154,32 @@ public class Property24 {
                double rent_amount = scanner.nextDouble();
         }scanner.close();
     }
+ ///Function for monthly payments
+ public static double MonthlyPayment(double amount, double rate, int months){
+        return (rate * amount)/(1- Math.pow(1 + rate, -months));
+        
+    }
+ // fuction to display Amortization Table
+    public static void displayAmortizationTable(double amount, double rate, int months) {
+        double balance = price_property;
+        double payment = MonthlyPayment(price_property, Interest, Months);
+        double irPaid, amountPaid, newBalance;
+        
+        // display the header row
+        System.out.printf("%12s %12s %12s %12s %12s %12s%n", "Month",
+           "Old Balance", "Payment", "Interest", "Principal", "New Balance");
+        System.out.printf("%12s %12s %12s %12s %12s %12s%n", "============",
+           "============", "============", "============", "============", "============");
+        
+        for (int month = 1; month<=Months; month++){
+            irPaid = balance * rate;
+            amountPaid = payment - irPaid;
+            newBalance = balance - amountPaid;
+          //display the table row
+            System.out.printf("%12d %12.2f %12.2f %12.2f %12.2f %12.2f%n", month,
+           balance, payment, irPaid, amountPaid, newBalance);
+            // update balance
+            balance = newBalance;   
+        } 
 }
     
