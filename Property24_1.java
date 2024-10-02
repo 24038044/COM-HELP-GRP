@@ -2,23 +2,10 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 class Person {
-    private String name;
-    private String surname;
-    private String[] categories = {"Groceries", "Water and Electricity", "Travel", "Cell", "Other"};
+    public String name;
+    public String surname;
+    public String[] categories = {"Groceries", "Water and Electricity", "Travel", "Cell", "Other"};
     public double other;
-
-    public Person() {
-        this.name = JOptionPane.showInputDialog("Enter your first name>>");
-        this.surname = JOptionPane.showInputDialog("Enter your last name>>");
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
 }
 
 class PaySlip extends Person {
@@ -27,7 +14,7 @@ class PaySlip extends Person {
     public double taxDeduction;
 
     public PaySlip() {
-        income = getValidDoubleInput(getName() + " " + getSurname() + ", please type in your Gross Monthly income (before deductions):");
+        income = getValidDoubleInput(name + " " + surname + ", please type in your Gross Monthly income (before deductions):");
         if (income > 0) {
             taxDeduction = getValidDoubleInput("Then type in your estimated monthly tax deduction:");
             if (taxDeduction > 0) {
@@ -38,10 +25,10 @@ class PaySlip extends Person {
         } else {
             showError("Please input a valid, non-zero and non-negative amount for income.");
         }
-        System.out.println(getName() + " " + getSurname() + ", your monthly income before deduction is " + income + " and your deducted amount is " + taxDeduction);
+        System.out.println(name + " " + surname + ", your monthly income before deduction is " + income + " and your deducted amount is " + taxDeduction);
     }
 
-    private String calculateTaxPercentage(double income, double taxDeduction) {
+    public String calculateTaxPercentage(double income, double taxDeduction) {
         if (income > taxDeduction) {
             double taxPercent = (taxDeduction / income) * 100;
             return "Your tax percentage is " + taxPercent + "%";
@@ -50,7 +37,7 @@ class PaySlip extends Person {
         }
     }
 
-    private double getValidDoubleInput(String message) {
+    public double getValidDoubleInput(String message) {
         double value;
         while (true) {
             try {
@@ -58,11 +45,13 @@ class PaySlip extends Person {
                 value = Double.parseDouble(input);
                 if (value >= 0) {
                     break;
-                }
-                showError("Please enter a valid non-negative number.");
+                }else{
+                JOptionPane.showMessageDialog(null, "Please enter a valid non-negative number.");
+                }  
             } catch (NumberFormatException e) {
-                showError("Invalid input. Please enter a numeric value.");
+                showError("Please type in a numerical value");
             }
+
         }
         return value;
     }
@@ -124,7 +113,7 @@ class Expenditures extends PaySlip { // Moved here for accessibility of PaySlip 
                             expenditureList.add(other);
                         }
                     }
-                System.out.println(getName() + ", the amounts you have entered have been recorded as " + "\n" + "Groceries\t\t" + groceries + "\nWater and Electricity\t"+waterAndElectricity +"\nTravel Costs\t\t"+travel+"\nCellphone\t\t"+cell+"\nOther costs\t\t"+other);
+                System.out.println(name + ", the amounts you have entered have been recorded as " + "\n" + "Groceries\t\t" + groceries + "\nWater and Electricity\t"+waterAndElectricity +"\nTravel Costs\t\t"+travel+"\nCellphone\t\t"+cell+"\nOther costs\t\t"+other);
                 //use for-each to loop everything on expenditureList array and then use its attribute expense to calculate the totalExpense
                 for (double expense : expenditureList) {
                     totalExpense += expense;
@@ -133,7 +122,7 @@ class Expenditures extends PaySlip { // Moved here for accessibility of PaySlip 
                 //then use the totalExpense to find the estimatedRemains which we will use on HousingOptions
                 estimatedRemains = income - taxDeduction - totalExpense; 
                     if (OverSpending(estimatedRemains)) {
-                        JOptionPane.showMessageDialog(null,getName() + ", you are overspending...");
+                        JOptionPane.showMessageDialog(null,name + ", you are overspending...");
                     }else {
                         JOptionPane.showMessageDialog(null, "With tax deducted and total expenses paid for, your estimated account stands at R" + estimatedRemains);
                         }
@@ -150,8 +139,10 @@ class Expenditures extends PaySlip { // Moved here for accessibility of PaySlip 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class HousingOptions extends Expenditures {
     public double processHousing() {
-        if (OverSpending(estimatedRemains)) {
-            JOptionPane.showMessageDialog(null,getName() + ", you are overspending and cannot afford a place to stay");
+        double availableAmount;
+        availableAmount = estimatedRemains;
+        if (OverSpending(availableAmount)) {
+            JOptionPane.showMessageDialog(null,name + ", you are overspending and cannot afford a place to stay");
         } else {
             
             // System.out.println("Welcome, " + name + " " + surname);
@@ -174,14 +165,14 @@ class HousingOptions extends Expenditures {
             } else {
                 double rentAmount = Double.parseDouble(JOptionPane.showInputDialog("Enter the monthly rental amount:"));
                 if (OverSpending(estimatedRemains)) {
-                    JOptionPane.showMessageDialog(null, getName() +", you are overspending and do not qualify for a house or to rent.");
+                    JOptionPane.showMessageDialog(null, name +", you are overspending and do not qualify for a house or to rent.");
                 }else{
                     if (rentAmount < 0) {
-                        JOptionPane.showMessageDialog(null, getName() + " please type in the correct no-zero amount.");
+                        JOptionPane.showMessageDialog(null, name + " please type in the correct no-zero amount.");
                     } else {
                         JOptionPane.showMessageDialog(null, "You have chosen to rent an apartment at R" + rentAmount);
-                        double availableAmount = estimatedRemains - rentAmount; // Use the calculated estimatedRemains from Expenditures
-                        System.out.println(getName() + ", you have chosen to rent a R" + rentAmount + " apartment\nYour remaining balance after paying your rent is R"+availableAmount);
+                        availableAmount = estimatedRemains - rentAmount; // Use the calculated estimatedRemains from Expenditures
+                        System.out.println(name + ", you have chosen to rent a R" + rentAmount + " apartment\nYour remaining balance after paying your rent is R"+availableAmount);
                         // choice(availableAmount);
                         if (availableAmount < 0) {
                             JOptionPane.showMessageDialog(null, "You do not qualify for a R" + rentAmount + " apartment.");
