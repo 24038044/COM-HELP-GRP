@@ -4,9 +4,11 @@ This repository is for all the projects discussed on the group.
 Class Person
 
 In the beginning there was class person close person has two initiations that will the public car in the project named privacy property we created at laws for every section of the code. In the beginning we imported Java X swing star becaused we wanted to report everything from the JOptionPane without issue or imported Java util array list so that we can use their  list to gather all the expenses together. We started with the class person and in class person we created public string name to get the name from the user and public string sending to get the surname from the user. Then created public string categories has groceries or technically city travel  and other things to name the expenses gathered and the public double that is used in case of extra expenses and that is everything initiated in class person.
+
 Class Payslip
 
  Going to the next class payslip which extends from class person, is going to use the name and surname variables from class person  in payslip income and text deduction is created together information from the user and calculate how much the user pays for tax using the method called calculate tax percentage, which receives the income and tax deducted there is an if statement that checks if the income supplied by the user is a positive number and whether if tax deduction is also a positive number if not, there is a show error method created to show a quote please input valid non negative amount for tax deduction. There are methods calculate text percentage is public in case we want to use it in other classes as well as get valid double stray and show error message and that is the end of our code.
+
 Class Expenditure
 
  The next class is class expenditure which extends payslip and is going to use methods and variables gathered in pace loop interest expenditure created a variable named estimated remains which is going to calculate the amount remaining of the expenses that have been paid and a rate list expenditure list is created to add expenses from the user which are water and electricity, groceries, travel costs, phone costs, and others.
