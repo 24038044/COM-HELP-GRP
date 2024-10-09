@@ -1,5 +1,5 @@
-import javax.swing.*;
 import java.util.ArrayList;
+import javax.swing.*;
 
 class Person {
     public String name = JOptionPane.showInputDialog(null, "Please type in your name");
@@ -61,6 +61,7 @@ class PaySlip extends Person {
 class Expenditures extends PaySlip { // Moved here for accessibility of PaySlip attributes
     public double estimatedRemains; 
     ArrayList<Double> expenditureList = new ArrayList<>();
+    ArrayList<String> ExpensesList = new ArrayList<>();
 
     public Expenditures() {
         
@@ -75,6 +76,7 @@ class Expenditures extends PaySlip { // Moved here for accessibility of PaySlip 
                     // double groceries = Double.parseDouble(JOptionPane.showInputDialog("Please enter your estimated grocery costs:"));
                 }else {
                     expenditureList.add(groceries);
+                    ExpensesList.add("Groceries");
                 }
             
             double waterAndElectricity = Double.parseDouble(JOptionPane.showInputDialog("Please enter your estimated water and electricity costs:"));
@@ -82,6 +84,7 @@ class Expenditures extends PaySlip { // Moved here for accessibility of PaySlip 
                     JOptionPane.showMessageDialog(null, "Please enter the correct value non-zero values");
                 }else {
                     expenditureList.add(waterAndElectricity);
+                    ExpensesList.add("water and Electricity");
                 }
             
             double travel = Double.parseDouble(JOptionPane.showInputDialog("Please enter your estimated travel costs, including petrol, lodging, etc.:"));
@@ -89,6 +92,7 @@ class Expenditures extends PaySlip { // Moved here for accessibility of PaySlip 
                     JOptionPane.showMessageDialog(null, "Please enter the correct value non-zero values");
                 }else {
                     expenditureList.add(travel);
+                    ExpensesList.add("Travel costs");
                 }
             
             double cell = Double.parseDouble(JOptionPane.showInputDialog("Please enter your cellphone and/or telephone costs combined:"));
@@ -96,6 +100,7 @@ class Expenditures extends PaySlip { // Moved here for accessibility of PaySlip 
                     JOptionPane.showMessageDialog(null, "Please enter the correct value non-zero values");
                 }else {
                     expenditureList.add(cell);
+                    ExpensesList.add("Cellphone costs");
                 }
 
                 // for (int i = 0; i < expenditureList.size(); i++) {
@@ -107,9 +112,12 @@ class Expenditures extends PaySlip { // Moved here for accessibility of PaySlip 
                             JOptionPane.showMessageDialog(null,"Please enter a value above Zero(0)");
                         }else {
                             expenditureList.add(other);
+                            ExpensesList.add("Other costs");
                         }
                     }
                 System.out.println(name + ", the amounts you have entered have been recorded as " + "\n" + "Groceries\t\t" + groceries + "\nWater and Electricity\t"+waterAndElectricity +"\nTravel Costs\t\t"+travel+"\nCellphone\t\t"+cell+"\nOther costs\t\t"+other);
+                System.out.println("The expenses in an orderly manner are as follows");
+                bubbleSortDescending(ExpensesList, expenditureList);
                 //use for-each to loop everything on expenditureList array and then use its attribute expense to calculate the totalExpense
                 for (double expense : expenditureList) {
                     totalExpense += expense;
@@ -126,6 +134,39 @@ class Expenditures extends PaySlip { // Moved here for accessibility of PaySlip 
             JOptionPane.showMessageDialog(null, "You have not recorded any expenditure.");
         }
     }
+
+public static void bubbleSortDescending(ArrayList<String> products, ArrayList<Double> prices) {
+    int n = prices.size();
+    boolean swapped;
+
+    for (int i = 0; i < n - 1; i++) {
+        swapped = false;
+        for (int j = 0; j < n - 1 - i; j++) {
+            // Check if the current price is less than the next price
+            if (prices.get(j) < prices.get(j + 1)) {
+                // Swap prices
+                double tempPrice = prices.get(j);
+                prices.set(j, prices.get(j + 1));
+                prices.set(j + 1, tempPrice);
+
+                // Swap corresponding products
+                String tempProduct = products.get(j);
+                products.set(j, products.get(j + 1));
+                products.set(j + 1, tempProduct);
+
+                swapped = true;
+            }
+        }
+        // If no elements were swapped, the arrays are sorted
+        if (!swapped) {
+            break;
+        }
+    }
+
+    for (int i = 0; i < products.size(); i++) {
+        System.out.println(products.get(i) + "\t: R" + prices.get(i));
+    }
+}
 
     public static boolean OverSpending(double number) {
         return number < 0;
@@ -293,8 +334,10 @@ class CarChoice extends HousingOptions{
 
                     if (monthlyPayment <= affordabilityThreshold) {
                         JOptionPane.showMessageDialog(null, "Congratulations! You qualify to purchase this vehicle. Your monthly payment is: R" + String.format("%.2f", monthlyPayment));
+                        System.out.println("Congratulations! You qualify to purchase this vehicle. Your monthly payment is: R" + String.format("%.2f", monthlyPayment));
                     } else {
                         JOptionPane.showMessageDialog(null, "Unfortunately, you do not qualify to purchase this vehicle. Your monthly payment is: R" + String.format("%.2f", monthlyPayment) + ", which exceeds 30% of your available balance.");
+                        System.out.println("Unfortunately, you do not qualify to purchase this vehicle. Your monthly payment is: R" + String.format("%.2f", monthlyPayment) + ", which exceeds 30% of your available balance.");
                     }
                 }
 
